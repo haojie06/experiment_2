@@ -1,7 +1,9 @@
 package experiment_2;
 import java.util.*;
 //文献库类
-public class Library {
+public class  Library implements Comparable  {
+
+
 
 
     public static void main(String[] args) {
@@ -66,9 +68,12 @@ public class Library {
                             System.out.println("请输入刊号");
                             temp = cho.next();
                             publication.setPubNumber(temp);
+
                             System.out.println("请输入期刊名");
                             temp = cho.next();
                             publication.setArtName(temp);
+
+
                         }
 
                         if (choice == 2) {
@@ -86,6 +91,13 @@ public class Library {
                         int year = cho.nextInt();
                         publication.setYear(year);
 
+
+                        //注意！此处需要改进。
+                        System.out.println("请输入论文引用次数");
+                        int time = cho.nextInt();
+                        publication.setCitationCount(time);
+                        author.setCitationCount(time);
+
                         //下面录入作者信息
                         System.out.println("请输入作者的名：");
                         temp = cho.next();
@@ -94,7 +106,7 @@ public class Library {
                         System.out.println("请输入作者的姓: ");
                         temp = cho.next();
                         author.setLastname(temp);
-
+                        /*
                         System.out.println("请输入作者的邮箱");
                         temp = cho.next();
                         author.setMailbox(temp);
@@ -102,7 +114,7 @@ public class Library {
                         System.out.println("请输入作者的单位");
                         temp = cho.next();
                         author.setOrganization(temp);
-
+                        没用到的信息*/
                         //录入完毕，将author 与 pub 对象add至arraylist中
 
                         authorlist.add(author);
@@ -150,26 +162,35 @@ public class Library {
                     break;
 
                 case 3:
+
+
+
+                    //进行排序（降序）
+                    Collections.sort(publist);
+                    Collections.sort(authorlist);
+
                     length = publist.size();
                     System.out.println("共有" + (length + 1) + "条信息");
 
                     for (int i = 0; i < length; i++) {
                         //type 为Article时
                         if (publist.get(i).type == 1) {
-                            System.out.println("************************");
+                            System.out.println("*********************************************************");
                             System.out.printf("Article ：" + authorlist.get(i).getFirstname() + " " + authorlist.get(i).getLastname() + "(" + publist.get(i).getYear() + ")");  //现在系统只支持作者名为一个。。。。。
                             System.out.printf("," + publist.get(i).getHeadLine() + "," + publist.get(i).getArtName());
                             System.out.println("," + publist.get(i).getPubNumber() + "," + publist.get(i).getPage());
-                            System.out.println("*************************");
+                            System.out.println("被引用次数：" + publist.get(i).getCitationCount());
+                            System.out.println("*********************************************************");
                         }
 
                         //type conf
                         if (publist.get(i).type == 2) {
-                            System.out.println("************************");
+                            System.out.println("***********************************************************");
                             System.out.printf("Conference ：" + authorlist.get(i).getFirstname() + " " + authorlist.get(i).getLastname() + "(" + publist.get(i).getYear() + ")");  //现在系统只支持作者名为一个。。。。。
                             System.out.printf("," + publist.get(i).getHeadLine() + "," + publist.get(i).getConName());
                             System.out.println("," + "," + publist.get(i).getPage());
-                            System.out.println("*************************");
+                            System.out.println("被引用次数：" + publist.get(i).getCitationCount());
+                            System.out.println("************************************************************");
 
                         }
                     }
@@ -185,6 +206,13 @@ public class Library {
                 continue;
         }
 
+    }
+
+    //实现接口
+
+    @Override
+    public int compareTo(Object o) {
+            return 0;
     }
 }
 
